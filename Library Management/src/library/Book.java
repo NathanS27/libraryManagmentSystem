@@ -9,6 +9,7 @@ public class Book {
 	private String checkOutDate;
 	private String dueDate;
 	private String borrowerName;
+	private Date date;
 	
 	public Book(String ttl, String writer) {
 	 title=ttl;
@@ -40,7 +41,9 @@ public class Book {
 		return checkOutDate;
 	}
 	public void setCheckOutDate(String str) {
-		checkOutDate=str;
+		date = new Date(str);
+		checkOutDate=date.getStartDate();
+		dueDate=date.getDueDate();
 	}
 	
 	public String getBorrower() {

@@ -42,10 +42,10 @@ public class Catalog {
 		return inventory.get(i);
 	}
 	
-	public void checkOut(int i, String borrower,String date) {
+	public void checkOut(int i, String borrower,String inputDate) {
 		inventory.get(i).setStatus(false);
 		inventory.get(i).setBorrower(borrower);
-		inventory.get(i).setCheckOutDate(date);
+		inventory.get(i).setCheckOutDate(inputDate);
 		//TODO: set due date
 	}
 	

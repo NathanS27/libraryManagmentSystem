@@ -23,7 +23,7 @@ public class DisplayDlg extends GBDialog {
 		super(parent);
 		setTitle(type);
 		setDlgCloseIndicator("Close");
-		setSize(700, 400);
+		setSize(900, 400);
 		setLocationRelativeTo(null);
 		arrayList=list;
 		createTable();
@@ -62,6 +62,7 @@ public class DisplayDlg extends GBDialog {
         dataTable.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
         dataTable.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
         dataTable.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+        dataTable.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
      
 
 		// Add the scrollPane to the panel and put it in the center so it uses the full panel
