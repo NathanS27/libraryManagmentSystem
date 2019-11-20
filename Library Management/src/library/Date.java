@@ -38,6 +38,10 @@ public class Date {
 		return print(startDate);
 	}
 	
+	public int[] getRawDate{
+		
+	}
+	
 	public String getDueDate() {
 		return print(dateAdd(14,startDate));
 	}
@@ -113,6 +117,7 @@ public class Date {
 			throw new ImproperFormatException("Date format must be mm/dd/yyy");
 		}
 	}
+
 }
 
 

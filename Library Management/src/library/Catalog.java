@@ -57,6 +57,10 @@ public class Catalog {
 		inventory.get(i).setStatus(true);
 		inventory.get(i).setBorrower(null);
 	}
+
+	private boolean isOverdue(Book b) {
+		int[] start = b.
+	}
 }
 
 
