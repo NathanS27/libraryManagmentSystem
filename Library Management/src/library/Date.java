@@ -14,15 +14,20 @@ public class Date {
 	}
 	
 	public Date(String dateInput) throws ImproperFormatException {
-		String[] dateRaw =dateInput.split("/");
-		errorCheck(dateInput);
-		try {
-		startDate[0]=Integer.parseInt(dateRaw[0]);
-		startDate[1]=Integer.parseInt(dateRaw[1]);
-		startDate[2]=Integer.parseInt(dateRaw[2]);
+		if(dateInput!=null) {
+			String[] dateRaw =dateInput.split("/");
+			errorCheck(dateInput);
+			try {
+			startDate[0]=Integer.parseInt(dateRaw[0]);
+			startDate[1]=Integer.parseInt(dateRaw[1]);
+			startDate[2]=Integer.parseInt(dateRaw[2]);
+			}
+			catch(NumberFormatException e) {
+				throw new ImproperFormatException("Date must be integers");
+			}
 		}
-		catch(NumberFormatException e) {
-			throw new ImproperFormatException("Date must be integers");
+		else {
+			startDate=null;
 		}
 	}
 	
@@ -38,7 +43,10 @@ public class Date {
 	}
 	
 	private String print(int[] date) {
+		if(date!=null) {
 		return date[0]+"/"+date[1]+"/"+date[2];
+		}
+		return null;
 	}
 	
 	private Boolean isLeapYear(int year) {
@@ -105,14 +113,6 @@ public class Date {
 			throw new ImproperFormatException("Date format must be mm/dd/yyy");
 		}
 	}
-	
-//	public boolean overDue(int[] dueDate) {
-//		int[] currentDate=today();
-//		if(dueDate[3]>currentDate[3])
-//		TODO google operator method
-	// write an is less than
-	//https://www.geeksforgeeks.org/date-class-java-examples/
-//	}
 }
 
 

@@ -51,14 +51,11 @@ public class Catalog {
 		inventory.get(i).setStatus(false);
 		inventory.get(i).setBorrower(borrower);
 		inventory.get(i).setCheckOutDate(inputDate);
-		//TODO: set due date
 	}
 	
 	public void returnbook(int i)throws ImproperFormatException {
 		inventory.get(i).setStatus(true);
 		inventory.get(i).setBorrower(null);
-		inventory.get(i).setDueDate(null);;
-		inventory.get(i).setCheckOutDate(null);
 	}
 }
 

@@ -14,7 +14,8 @@ public class ErrorDlg extends GBDialog {
 	public ErrorDlg(JFrame parent,String message) {
 		super(parent);
 		setTitle("ERROR");
-		setBackground(Color.RED);
+		
+		getContentPane().setBackground(Color.RED);
 		setDlgCloseIndicator("Close");
 		setSize(400, 100);
 		setLocationRelativeTo(null);

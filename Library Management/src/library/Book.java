@@ -5,7 +5,7 @@ public class Book {
 	private String title;
 	private String author;
 	//true means available, false means checked out
-	private Boolean status = true;
+	private Boolean isAvailable = true;
 	private String checkOutDate;
 	//make them date classes
 	private String dueDate;
@@ -26,18 +26,16 @@ public class Book {
 	
 	public Boolean getStatus() {
 		//compare due date to current date
-		return status;
+		return isAvailable;
 	}
 	public void setStatus(Boolean b) {
-		status=b;
+		isAvailable=b;
 	}
 	
 	public String getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(String str) {
-		dueDate=str;
-	}
+
 	
 	public String getCheckOutDate() {
 		return checkOutDate;

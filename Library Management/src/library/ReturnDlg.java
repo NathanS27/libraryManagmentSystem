@@ -11,6 +11,7 @@ public class ReturnDlg extends GBDialog {
 	JButton returnButton = addButton("Return", 4, 1, 1, 1);
 	JButton cancelBtn = addButton("Cancel", 4, 2, 1, 1);
 	
+	JFrame parentClass= new JFrame();
 	Catalog catalog;
 	
 	public ReturnDlg(JFrame parent,Catalog c) {
@@ -20,6 +21,7 @@ public class ReturnDlg extends GBDialog {
 		setSize(300, 100);
 		setLocationRelativeTo(null);
 		catalog = c;
+		parentClass=parent;
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
@@ -27,7 +29,6 @@ public class ReturnDlg extends GBDialog {
 			//TODO error check
 			int bLocation=catalog.findBook(title.getText());
 			if(bLocation!=-1) {
-				Book b = catalog.getBook(bLocation);
 				try {
 				catalog.returnbook(bLocation);
 				}
@@ -36,8 +37,7 @@ public class ReturnDlg extends GBDialog {
 				}
 			}
 			else {
-				//TODO throw error
-				System.out.println("ERROR");
+				errorMsg("Book not found");
 			}
 			dispose();	
 		}
@@ -45,6 +45,11 @@ public class ReturnDlg extends GBDialog {
 			dispose();
 		}
 		
+	}
+	
+	private void errorMsg(String str) {
+		ErrorDlg display = new ErrorDlg(parentClass,str);
+		display.setVisible(true);
 	}
 }
 
