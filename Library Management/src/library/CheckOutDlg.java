@@ -11,13 +11,16 @@ public class CheckOutDlg extends GBDialog {
 	JLabel borrowerLabel = addLabel("Borrower:", 2, 1, 1, 1);
 	JTextField borrower = addTextField("", 2,2,1,1);
 	
-	JLabel dateLabel = addLabel("Date:", 3, 1, 1, 1);
+	JLabel dateLabel = addLabel("Date:(mm/dd/yyyy)", 3, 1, 1, 1);
 	JTextField date = addTextField("", 3,2,1,1);
 	
 	JButton checkOut = addButton("Check Out", 4, 1, 1, 1);
 	JButton cancelBtn = addButton("Cancel", 4, 2, 1, 1);
 	
+	JFrame parentClass= new JFrame();
+	
 	Catalog catalog;
+	Date dateClass= new Date();
 	
 	public CheckOutDlg(JFrame parent, Catalog c) {
 		super(parent);
@@ -26,6 +29,8 @@ public class CheckOutDlg extends GBDialog {
 		setSize(300, 150);
 		setLocationRelativeTo(null);
 		catalog=c;
+		date.setText(dateClass.getCurrentDate());
+		parentClass=parent;
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
@@ -34,13 +39,27 @@ public class CheckOutDlg extends GBDialog {
 			int bLocation=catalog.findBook(title.getText());
 			if(bLocation!=-1) {
 				Book b = catalog.getBook(bLocation);
+				try {
 				catalog.checkOut(bLocation, borrower.getText(),date.getText());
+				dispose();
+				}
+				catch(ImproperFormatException e) {
+					errorMsg(e.getLocalizedMessage());
+				}
 			}
 			else {
-				//TODO throw error
-				System.out.println("ERROR");
+				errorMsg("Book not found");
 			}
+		}
+		else if(buttonObj==cancelBtn) {
 			dispose();
 		}
 	}
+	
+	private void errorMsg(String str) {
+		ErrorDlg display = new ErrorDlg(parentClass,str);
+		display.setVisible(true);
+	}
 }
+
+

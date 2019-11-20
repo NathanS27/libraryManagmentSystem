@@ -7,6 +7,7 @@ public class Book {
 	//true means available, false means checked out
 	private Boolean status = true;
 	private String checkOutDate;
+	//make them date classes
 	private String dueDate;
 	private String borrowerName;
 	private Date date;
@@ -24,6 +25,7 @@ public class Book {
 	}
 	
 	public Boolean getStatus() {
+		//compare due date to current date
 		return status;
 	}
 	public void setStatus(Boolean b) {
@@ -40,7 +42,7 @@ public class Book {
 	public String getCheckOutDate() {
 		return checkOutDate;
 	}
-	public void setCheckOutDate(String str) {
+	public void setCheckOutDate(String str) throws ImproperFormatException {
 		date = new Date(str);
 		checkOutDate=date.getStartDate();
 		dueDate=date.getDueDate();
@@ -54,3 +56,5 @@ public class Book {
 	}
 	
 }
+
+

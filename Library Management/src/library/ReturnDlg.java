@@ -28,13 +28,23 @@ public class ReturnDlg extends GBDialog {
 			int bLocation=catalog.findBook(title.getText());
 			if(bLocation!=-1) {
 				Book b = catalog.getBook(bLocation);
+				try {
 				catalog.returnbook(bLocation);
+				}
+				catch(ImproperFormatException e) { 
+					//this will never occur as it gets set to Null during returnBook 
+				}
 			}
 			else {
 				//TODO throw error
 				System.out.println("ERROR");
 			}
+			dispose();	
+		}
+		else if(buttonObj==cancelBtn) {
 			dispose();
 		}
+		
 	}
 }
+

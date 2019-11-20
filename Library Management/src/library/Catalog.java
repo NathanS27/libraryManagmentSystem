@@ -1,6 +1,7 @@
 package library;
 
 import java.util.*;
+import BreezySwing.*;
 
 public class Catalog {
 	
@@ -29,6 +30,10 @@ public class Catalog {
 		return overdue;
 	}
 	
+	public void addBook(String title, String author) {
+		inventory.add(new Book(title,author));
+	}
+	
 	public int findBook(String title) {
 		for(int i=0;i<inventory.size();i++) {
 			if(title.equals(inventory.get(i).getTitle())) {
@@ -42,17 +47,19 @@ public class Catalog {
 		return inventory.get(i);
 	}
 	
-	public void checkOut(int i, String borrower,String inputDate) {
+	public void checkOut(int i, String borrower,String inputDate)throws ImproperFormatException{
 		inventory.get(i).setStatus(false);
 		inventory.get(i).setBorrower(borrower);
 		inventory.get(i).setCheckOutDate(inputDate);
 		//TODO: set due date
 	}
 	
-	public void returnbook(int i) {
+	public void returnbook(int i)throws ImproperFormatException {
 		inventory.get(i).setStatus(true);
 		inventory.get(i).setBorrower(null);
 		inventory.get(i).setDueDate(null);;
+		inventory.get(i).setCheckOutDate(null);
 	}
 }
+
 

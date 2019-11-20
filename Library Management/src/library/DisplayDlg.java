@@ -73,9 +73,9 @@ public class DisplayDlg extends GBDialog {
 	
 	private String statusCheck(Boolean b) {
 		if(b) {
-			return"AVALIBLE";
+			return "<html> <font color='green'> AVAILABLE</font> </html>";
 		}
-		return "CHECKED OUT";
+		return "<html> <font color='red'> CHECKED OUT</font> </html>";
 	}
 	
 	private void displayBook(Book b) {
@@ -90,3 +90,5 @@ public class DisplayDlg extends GBDialog {
 		dataModel.addRow(dataRow);
 	}
 }
+
+
