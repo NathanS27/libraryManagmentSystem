@@ -20,10 +20,10 @@ public class Catalog {
 		return inventory;	
 	}
 	
-	public ArrayList<Book> getOverdue(){
+	public ArrayList<Book> getOverdue() throws ImproperFormatException{
 		ArrayList<Book> overdue = new ArrayList<Book>();;
 		for(int i=0;i<inventory.size();i++) {
-			if(!inventory.get(i).getStatus()) {
+			if(inventory.get(i).isOverdue()) {
 				overdue.add(inventory.get(i));
 			}
 		}
@@ -35,7 +35,7 @@ public class Catalog {
 	}
 	
 	public int findBook(String title) {
-		for(int i=0;i<inventory.size();i++) {
+		for(int i=0;i<inventory.size();i++) { 
 			if(title.equals(inventory.get(i).getTitle())) {
 				return i;
 			}
@@ -50,7 +50,8 @@ public class Catalog {
 	public void checkOut(int i, String borrower,String inputDate)throws ImproperFormatException{
 		inventory.get(i).setStatus(false);
 		inventory.get(i).setBorrower(borrower);
-		inventory.get(i).setCheckOutDate(inputDate);
+		System.out.println(inputDate);
+		inventory.get(i).setCheckOutDate(new Date(inputDate));
 	}
 	
 	public void returnbook(int i)throws ImproperFormatException {
@@ -58,9 +59,9 @@ public class Catalog {
 		inventory.get(i).setBorrower(null);
 	}
 
-	private boolean isOverdue(Book b) {
-		int[] start = b.
-	}
+//	private boolean isOverdue(Book b) {
+//		int[] start = b.
+//	}
 }
 
 

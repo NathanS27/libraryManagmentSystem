@@ -6,11 +6,8 @@ public class Book {
 	private String author;
 	//true means available, false means checked out
 	private Boolean isAvailable = true;
-	private String checkOutDate;
-	//make them date classes
-	private String dueDate;
+	private Date date = new Date();
 	private String borrowerName;
-	private Date date;
 	
 	public Book(String ttl, String writer) {
 	 title=ttl;
@@ -32,18 +29,12 @@ public class Book {
 		isAvailable=b;
 	}
 	
-	public String getDueDate() {
-		return dueDate;
+	public Date getDate() {
+		return date;
 	}
-
 	
-	public String getCheckOutDate() {
-		return checkOutDate;
-	}
-	public void setCheckOutDate(String str) throws ImproperFormatException {
-		date = new Date(str);
-		checkOutDate=date.getStartDate();
-		dueDate=date.getDueDate();
+	public void setCheckOutDate(Date inputDate) throws ImproperFormatException {
+		date = inputDate;
 	}
 	
 	public String getBorrower() {
@@ -51,6 +42,13 @@ public class Book {
 	}
 	public void setBorrower(String str) {
 		borrowerName=str;
+	}
+	
+	public Boolean isOverdue() throws ImproperFormatException {
+		if(date.isGreaterThan(date.getCurrentDate())) {
+			return true;
+		}
+		return false;
 	}
 	
 }

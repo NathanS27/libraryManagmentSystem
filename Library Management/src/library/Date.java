@@ -4,6 +4,8 @@ import java.util.Calendar;
 
 public class Date {
 
+	public Calendar c;
+	
 	private int[] startDate = new int[3];
 		
 	public Date(int m, int d, int y) {
@@ -34,12 +36,11 @@ public class Date {
 	public Date() {	
 	}
 	
+	public int[] getRawDate() {
+		return startDate;
+	}
 	public String getStartDate() {
 		return print(startDate);
-	}
-	
-	public int[] getRawDate{
-		
 	}
 	
 	public String getDueDate() {
@@ -118,6 +119,15 @@ public class Date {
 		}
 	}
 
+	public void updateTime() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(startDate[2], startDate[0], startDate[1]);
+		cal.re
+	}
+	
+	public static Calendar removeTimeFromDate(Calendar) {
+		
+	}
 }
 
 

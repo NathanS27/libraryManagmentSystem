@@ -7,7 +7,7 @@ import BreezySwing.*;
 
 public class LibraryUI extends GBFrame{
 	
-	JLabel currentDate = addLabel("",1,1,1,1);
+	JLabel currentDate = addLabel("",1,3,3,1);
 	JButton checkOut = addButton("Check Out", 2, 1, 1, 2);
 	JButton returnBook = addButton("Return", 2, 2, 1, 2);
 	JButton viewBooks = addButton("View Books", 2, 3, 1, 2);
@@ -38,14 +38,24 @@ public class LibraryUI extends GBFrame{
 			catalog.getInventory();
 		}
 		if(buttonObj == viewOverdue) {
+			try {
 			DisplayDlg dlg = new DisplayDlg(this,"Overdue", catalog.getOverdue());
 			dlg.setVisible(true);
 			catalog.getOverdue();
+			}
+			catch(ImproperFormatException e) {
+				errorMsg(e.getMessage());
+			}
 		}
 		if(buttonObj == addBook) {
 			AddDlg dlg = new AddDlg(this, catalog);
 			dlg.setVisible(true);
 		}
+	}
+	
+	private void errorMsg(String str) {
+		ErrorDlg display = new ErrorDlg(this,str);
+		display.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
