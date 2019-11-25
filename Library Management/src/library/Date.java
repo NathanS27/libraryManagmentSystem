@@ -3,16 +3,12 @@ package library;
 import java.util.Calendar;
 
 public class Date {
-
-	public Calendar c;
+	private int m,d,y;
 	
-	private int[] startDate = new int[3];
-		
-	public Date(int m, int d, int y) {
-		startDate = new int[3];
-		startDate[0]=m;
-		startDate[1]=d;
-		startDate[2]=y;
+	public Date(int month, int day, int year) {
+		m=month;
+		d=day;
+		y=year;
 	}
 	
 	public Date(String dateInput) throws ImproperFormatException {
@@ -20,97 +16,94 @@ public class Date {
 			String[] dateRaw =dateInput.split("/");
 			errorCheck(dateInput);
 			try {
-			startDate[0]=Integer.parseInt(dateRaw[0]);
-			startDate[1]=Integer.parseInt(dateRaw[1]);
-			startDate[2]=Integer.parseInt(dateRaw[2]);
+			m=Integer.parseInt(dateRaw[0]);
+			d=Integer.parseInt(dateRaw[1]);
+			y=Integer.parseInt(dateRaw[2]);
 			}
 			catch(NumberFormatException e) {
 				throw new ImproperFormatException("Date must be integers");
 			}
 		}
 		else {
-			startDate=null;
+			throw new ImproperFormatException("Date must be entered");
 		}
 	}
 	
 	public Date() {	
 	}
 	
-	public int[] getRawDate() {
-		return startDate;
-	}
-	public String getStartDate() {
-		return print(startDate);
-	}
-	
-	public String getDueDate() {
-		return print(dateAdd(14,startDate));
+	public Date(Date newDate) {
+		m=newDate.getMonth();
+		d= newDate.getDay();
+		y=newDate.getYear();
 	}
 	
-	private String print(int[] date) {
-		if(date!=null) {
-		return date[0]+"/"+date[1]+"/"+date[2];
-		}
-		return null;
+	
+	public int getMonth() {
+		return m;
+	}
+	public int getDay() {
+		return d;
+	}
+	public int getYear() {
+		return y;
+	}
+	
+	public String toString() {
+		return m+"/"+d+"/"+y;
 	}
 	
 	private Boolean isLeapYear(int year) {
 		return((year%4==0)&&(year%100!=0)||(year%400==0));
 	}
 	
-	private int[] dateAdd(int days,int[] date) {
+	public void dateAdd(int days) {
 		int daysOver;
 		int febLength=28;
-		date[1]+=days;
+		d+=days;
 //		February2 - 28 days in a common year and 29 days in leap years
-		if(date[0]==2) {
-			if(isLeapYear(date[2])) {
+		if(m==2) {
+			if(isLeapYear(y)) {
 				febLength=29;
 			}
-			if(date[1]>febLength) {
-				daysOver=date[1]-febLength;
-				date[1]=daysOver;
-				date[0]++;
+			if(d>febLength) {
+				daysOver=d-febLength;
+				d=daysOver;
+				m++;
 			}
 		}
 //		January1,March3,May5,July7,August8,October10,December12 - 31 days
-		else if((date[0]==1)||(date[0]==3)||(date[0]==5)||(date[0]==7)||(date[0]==8)||(date[0]==10)) {
-			if(date[1]>31) {
-				daysOver=date[1]-31;
-				date[1]=daysOver;
-				date[0]++;
+		else if((m==1)||(m==3)||(m==5)||(m==7)||(m==8)||(m==10)) {
+			if(d>31) {
+				daysOver=d-31;
+				d=daysOver;
+				m++;
 			}
 		}
 //		April4,June6,September9,November11 - 30 days
-		else if((date[0]==4)||(date[0]==6)||(date[0]==9)||(date[0]==11)) {
-			if(date[1]>30) {
-				daysOver=date[1]-30;
-				date[1]=daysOver;
-				date[0]++;
+		else if((m==4)||(m==6)||(m==9)||(m==11)) {
+			if(d>30) {
+				daysOver=d-30;
+				d=daysOver;
+				m++;
 			}
 		}
 		//december12 31
-		else if(date[0]==12) {
-			if(date[1]>31) {
-				date[0]=1;
-				daysOver=date[1]-31;
-				date[1]=daysOver;
-				date[2]++;
+		else if(m==12) {
+			if(d>31) {
+				m=1;
+				daysOver=d-31;
+				d=daysOver;
+				y++;
 			}
 		}
-	return date;
 	}
 	
-	public int[] today() {
-		int[] currentDate= new int[3];
-		currentDate[0]=Calendar.getInstance().get(Calendar.MONTH) + 1;
-		currentDate[1]=Calendar.getInstance().get(Calendar.DATE);
-		currentDate[2]=Calendar.getInstance().get(Calendar.YEAR);
-		return currentDate;
-	}
-	
-	public String getCurrentDate() {
-		return print(today());
+	public Date today() {
+		int currentMonth=Calendar.getInstance().get(Calendar.MONTH) + 1;
+		int currentDay=Calendar.getInstance().get(Calendar.DATE);
+		int currentYear=Calendar.getInstance().get(Calendar.YEAR);
+		return new Date(currentMonth,currentDay,currentYear);
 	}
 
 	private void errorCheck(String str) throws ImproperFormatException {
@@ -119,15 +112,12 @@ public class Date {
 		}
 	}
 
-	public void updateTime() {
+	private Long timeInMiliseconds() {
 		Calendar cal = Calendar.getInstance();
-		cal.set(startDate[2], startDate[0], startDate[1]);
-		cal.re
+		cal.set(y, m, d);
+		return cal.getTimeInMillis();
 	}
-	
-	public static Calendar removeTimeFromDate(Calendar) {
-		
+	public Boolean isLessThan(Date d) {
+		return(timeInMiliseconds()<d.timeInMiliseconds());
 	}
 }
-
-

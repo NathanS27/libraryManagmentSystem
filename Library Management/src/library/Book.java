@@ -4,9 +4,8 @@ public class Book {
 
 	private String title;
 	private String author;
-	//true means available, false means checked out
-	private Boolean isAvailable = true;
-	private Date date = new Date();
+	private Date checkOutDate = new Date();
+	private Date dueDate = new Date();
 	private String borrowerName;
 	
 	public Book(String ttl, String writer) {
@@ -21,20 +20,22 @@ public class Book {
 		return author;
 	}
 	
-	public Boolean getStatus() {
-		//compare due date to current date
-		return isAvailable;
-	}
-	public void setStatus(Boolean b) {
-		isAvailable=b;
+	public Boolean isAvailable() {
+		return borrowerName==null;
 	}
 	
-	public Date getDate() {
-		return date;
+	public Date getCheckOutDate() {
+		return checkOutDate;
+	}
+
+	public Date getDueDate() {
+		return dueDate;
 	}
 	
 	public void setCheckOutDate(Date inputDate) throws ImproperFormatException {
-		date = inputDate;
+		checkOutDate = inputDate;
+		dueDate= new Date(inputDate);
+		dueDate.dateAdd(14);
 	}
 	
 	public String getBorrower() {
@@ -44,11 +45,9 @@ public class Book {
 		borrowerName=str;
 	}
 	
-	public Boolean isOverdue() throws ImproperFormatException {
-		if(date.isGreaterThan(date.getCurrentDate())) {
-			return true;
-		}
-		return false;
+	public Boolean isOverdue() {
+		//if dueDate is before today 
+		return getDueDate().isLessThan(new Date().today());
 	}
 	
 }

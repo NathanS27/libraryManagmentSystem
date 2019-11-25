@@ -82,11 +82,11 @@ public class DisplayDlg extends GBDialog {
 		String[] dataRow = new String[6];
 		dataRow[0] = b.getTitle();
 		dataRow[1] = b.getAuthor();
-		dataRow[2] = statusCheck(b.getStatus());
-		if(!b.getStatus()) {
+		dataRow[2] = statusCheck(b.isAvailable());
+		if(!b.isAvailable()) {
 			dataRow[3] = b.getBorrower();
-			dataRow[4] = b.getDate().getStartDate();
-			dataRow[5] = b.getDate().getDueDate();
+			dataRow[4] = b.getCheckOutDate().toString();
+			dataRow[5] = b.getDueDate().toString();
 		}
 		
 		dataModel.addRow(dataRow);

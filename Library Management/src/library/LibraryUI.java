@@ -13,6 +13,7 @@ public class LibraryUI extends GBFrame{
 	JButton viewBooks = addButton("View Books", 2, 3, 1, 2);
 	JButton viewOverdue = addButton("View Overdue", 2, 4, 1, 2);
 	JButton addBook = addButton("Add Book", 2, 5, 1, 2);
+	JButton search = addButton("Search", 2, 6, 1, 2);
 	
 	
 	String[][] data;
@@ -20,7 +21,7 @@ public class LibraryUI extends GBFrame{
 	Date date = new Date();
 	
 	public LibraryUI() {
-		currentDate.setText("Todays date: " + date.getCurrentDate());
+		currentDate.setText("Todays date: " + date.today().toString());
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
@@ -51,6 +52,10 @@ public class LibraryUI extends GBFrame{
 			AddDlg dlg = new AddDlg(this, catalog);
 			dlg.setVisible(true);
 		}
+		if(buttonObj == search) {
+			SearchDlg dlg = new SearchDlg(this,catalog);
+			dlg.setVisible(true);
+		}
 	}
 	
 	private void errorMsg(String str) {
@@ -60,7 +65,7 @@ public class LibraryUI extends GBFrame{
 	
 	public static void main(String[] args) {
 		JFrame frm = new LibraryUI();
-		frm.setSize(600, 90);
+		frm.setSize(700, 90);
 		frm.setTitle("Nathan's Library");
 		frm.getContentPane().setBackground(Color.ORANGE);
 		frm.setResizable(true);

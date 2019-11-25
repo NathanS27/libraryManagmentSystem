@@ -29,7 +29,7 @@ public class CheckOutDlg extends GBDialog {
 		setSize(300, 150);
 		setLocationRelativeTo(null);
 		catalog=c;
-		date.setText(dateClass.getCurrentDate());
+		date.setText(dateClass.today().toString());
 		parentClass=parent;
 	}
 	
