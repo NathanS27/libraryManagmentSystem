@@ -7,13 +7,14 @@ import BreezySwing.*;
 
 public class LibraryUI extends GBFrame{
 	
-	JLabel currentDate = addLabel("",1,3,3,1);
+	JLabel currentDate = addLabel("",1,3,4,1);
 	JButton checkOut = addButton("Check Out", 2, 1, 1, 2);
 	JButton returnBook = addButton("Return", 2, 2, 1, 2);
 	JButton viewBooks = addButton("View Books", 2, 3, 1, 2);
 	JButton viewOverdue = addButton("View Overdue", 2, 4, 1, 2);
 	JButton addBook = addButton("Add Book", 2, 5, 1, 2);
 	JButton search = addButton("Search", 2, 6, 1, 2);
+	JButton extraCredit = addButton("Extra Credit", 2, 7, 1, 2);
 	
 	
 	String[][] data;
@@ -56,6 +57,10 @@ public class LibraryUI extends GBFrame{
 			SearchDlg dlg = new SearchDlg(this,catalog);
 			dlg.setVisible(true);
 		}
+		if(buttonObj == extraCredit) {
+			ExtraCreditDlg dlg = new ExtraCreditDlg(this,catalog);
+			dlg.setVisible(true);
+		}
 	}
 	
 	private void errorMsg(String str) {
@@ -68,7 +73,7 @@ public class LibraryUI extends GBFrame{
 		frm.setSize(700, 90);
 		frm.setTitle("Nathan's Library");
 		frm.getContentPane().setBackground(Color.ORANGE);
-		frm.setResizable(true);
+		frm.setResizable(false);
 		frm.setVisible(true);
 		frm.setLocationRelativeTo(null);
 	}

@@ -50,6 +50,17 @@ public class Book {
 		return getDueDate().isLessThan(new Date().today());
 	}
 	
+	private String statusCheck(Boolean b) {
+		if(b) {
+			return " <font color='green'> AVAILABLE</font>";
+		}
+		return "<font color='red'> CHECKED OUT</font>";
+	}
+	
+	public String displayBook() {
+		return String.format("<html>%s, %s: %s<html>", getTitle(),getAuthor(),statusCheck(isAvailable()));
+	}
+	
 }
 
 
