@@ -7,16 +7,16 @@ import BreezySwing.*;
 
 public class LibraryUI extends GBFrame{
 	
-	JLabel currentDate = addLabel("",1,3,4,1);
-	JButton checkOut = addButton("Check Out", 2, 1, 1, 2);
-	JButton returnBook = addButton("Return", 2, 2, 1, 2);
-	JButton viewBooks = addButton("View Books", 2, 3, 1, 2);
-	JButton viewOverdue = addButton("View Overdue", 2, 4, 1, 2);
-	JButton addBook = addButton("Add Book", 2, 5, 1, 2);
-	JButton search = addButton("Search", 2, 6, 1, 2);
-	JButton extraCredit = addButton("Extra Credit", 2, 7, 1, 2);
-	
-	
+	JLabel currentDate = addLabel("",									1,1,4,1);
+	JButton checkOut = addButton("Check Out", 							2, 1, 1, 2);
+	JButton returnBook = addButton("Return", 							2, 2, 1, 2);
+	JButton viewBooks = addButton("View Books", 						2, 3, 1, 2);
+	JButton viewCheckedOutBooks = addButton("View Checked Out Books", 	2, 4, 1, 2);
+	JButton viewOverdue = addButton("View Overdue", 					4, 1, 1, 2);
+	JButton addBook = addButton("Add Book", 							4, 2, 1, 2);
+	JButton search = addButton("Search", 								4, 3, 1, 2);
+	JButton extraCredit = addButton("Extra Credit", 					4, 4, 1, 2);
+		
 	String[][] data;
 	Catalog catalog = new Catalog();
 	Date date = new Date();
@@ -39,6 +39,16 @@ public class LibraryUI extends GBFrame{
 			dlg.setVisible(true);
 			catalog.getInventory();
 		}
+		if(buttonObj == viewCheckedOutBooks) {
+			try {
+			DisplayDlg dlg = new DisplayDlg(this,"Checked Out", catalog.getCheckedOut());
+			dlg.setVisible(true);
+			catalog.getInventory();
+			}
+			catch(ImproperFormatException e) {
+				errorMsg(e.getMessage());
+			}
+		}
 		if(buttonObj == viewOverdue) {
 			try {
 			DisplayDlg dlg = new DisplayDlg(this,"Overdue", catalog.getOverdue());
@@ -58,9 +68,13 @@ public class LibraryUI extends GBFrame{
 			dlg.setVisible(true);
 		}
 		if(buttonObj == extraCredit) {
-			ExtraCreditDlg dlg = new ExtraCreditDlg(this,catalog);
+			ExtraCreditListDlg dlg = new ExtraCreditListDlg(this,catalog);
 			dlg.setVisible(true);
 		}
+	}
+	
+	public void listItemSelected (JList listObj){
+		System.out.println("selected");
 	}
 	
 	private void errorMsg(String str) {
@@ -70,14 +84,13 @@ public class LibraryUI extends GBFrame{
 	
 	public static void main(String[] args) {
 		JFrame frm = new LibraryUI();
-		frm.setSize(700, 90);
+		frm.setSize(700, 120);
 		frm.setTitle("Nathan's Library");
 		frm.getContentPane().setBackground(Color.ORANGE);
-		frm.setResizable(false);
+		frm.setResizable(true);
 		frm.setVisible(true);
 		frm.setLocationRelativeTo(null);
 	}
+	
+	
 }
-
-
-

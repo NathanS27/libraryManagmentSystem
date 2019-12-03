@@ -78,6 +78,13 @@ public class DisplayDlg extends GBDialog {
 		return "<html> <font color='red'> CHECKED OUT</font> </html>";
 	}
 	
+	private String overdueFormat(Boolean b, Book inputBook) {
+		if(b) {
+			return String.format("<html> <font color='red'> %s</font> </html>",inputBook.getDueDate().toString());
+		}
+		return inputBook.getDueDate().toString();
+	}
+	
 	private void displayBook(Book b) {
 		String[] dataRow = new String[6];
 		dataRow[0] = b.getTitle();
@@ -86,11 +93,9 @@ public class DisplayDlg extends GBDialog {
 		if(!b.isAvailable()) {
 			dataRow[3] = b.getBorrower();
 			dataRow[4] = b.getCheckOutDate().toString();
-			dataRow[5] = b.getDueDate().toString();
+			dataRow[5] = overdueFormat(b.isOverdue(),b);
 		}
 		
 		dataModel.addRow(dataRow);
 	}
 }
-
-

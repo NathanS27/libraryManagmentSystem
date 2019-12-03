@@ -26,20 +26,31 @@ public class ReturnDlg extends GBDialog {
 	
 	public void buttonClicked(JButton buttonObj) {
 		if(buttonObj==returnButton) {
-			//TODO error check
+			try {
+			errorCheck();
+			}
+			catch(ImproperFormatException e) { 
+				errorMsg(e.getMessage());
+			}
 			int bLocation=catalog.findBook(title.getText());
-			if(bLocation!=-1) {
+			if((bLocation!=-1)&&(!catalog.getBook(bLocation).isAvailable())) {
 				try {
 				catalog.returnbook(bLocation);
 				}
 				catch(ImproperFormatException e) { 
 					//this will never occur as it gets set to Null during returnBook 
 				}
+				dispose();
 			}
 			else {
+				if(catalog.getBook(bLocation).isAvailable()) {
+					errorMsg("Book was not checked out");
+				}
+				else {
 				errorMsg("Book not found");
+				}
 			}
-			dispose();	
+				
 		}
 		else if(buttonObj==cancelBtn) {
 			dispose();
@@ -47,9 +58,14 @@ public class ReturnDlg extends GBDialog {
 		
 	}
 	
+	private void errorCheck() throws ImproperFormatException{
+		if(title.getText().trim().isEmpty()) {
+			throw new ImproperFormatException("MUST ENTER TITLE");
+		}
+	}
+	
 	private void errorMsg(String str) {
 		ErrorDlg display = new ErrorDlg(parentClass,str);
 		display.setVisible(true);
 	}
 }
-

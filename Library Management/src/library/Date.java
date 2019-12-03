@@ -38,7 +38,6 @@ public class Date {
 		y=newDate.getYear();
 	}
 	
-	
 	public int getMonth() {
 		return m;
 	}
@@ -108,16 +107,48 @@ public class Date {
 
 	private void errorCheck(String str) throws ImproperFormatException {
 		if(str.length()>10) {
-			throw new ImproperFormatException("Date format must be mm/dd/yyy");
+			throw new ImproperFormatException("Date format must be mm/dd/yyyy");
 		}
+		String[] splitDate = str.split("/");
+		if((splitDate[0].length()>2)||Integer.parseInt(splitDate[0])>12) {
+			throw new ImproperFormatException("Invalid month");
+		}
+		if(splitDate[1].length()>2) {
+			throw new ImproperFormatException("Invalid day");
+		}
+		int ecm = Integer.parseInt(splitDate[0]);
+		int ecd = Integer.parseInt(splitDate[1]);
+		int ecy = Integer.parseInt(splitDate[2]);
+		int febLength=28;
+		if(ecm==2) {
+			if(isLeapYear(ecy)) {
+				febLength=29;
+			}
+			else if(ecd>febLength) {
+				throw new ImproperFormatException("Invalid day");
+			}
+		}
+		else if((ecm==1)||(ecm==3)||(ecm==5)||(ecm==7)||(ecm==8)||(ecm==10)) {
+			if(ecd>31) {
+				throw new ImproperFormatException("Invalid day");
+			}
+		}
+		else if((ecm==4)||(ecm==6)||(ecm==9)||(ecm==11)) {
+			if(ecd>30) {
+				throw new ImproperFormatException("Invalid day");
+			}
+		}
+		else if(ecm==12) {
+			if(ecd>31) {
+				throw new ImproperFormatException("Invalid day");
+			}
+		}
+		
 	}
-
-	private Long timeInMiliseconds() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(y, m, d);
-		return cal.getTimeInMillis();
-	}
-	public Boolean isLessThan(Date d) {
-		return(timeInMiliseconds()<d.timeInMiliseconds());
+	
+	public Boolean isLessThan(Date inputDate) {
+		int inputedDate=Integer.parseInt(String.format("%04d%02d%02d", inputDate.getYear(),inputDate.getMonth(),inputDate.getDay()));
+		int thisDate=Integer.parseInt(String.format("%04d%02d%02d", y,m,d));
+		return(thisDate<inputedDate);
 	}
 }

@@ -28,16 +28,29 @@ public class SearchDlg extends GBDialog {
 	
 	public void buttonClicked(JButton buttonObj) {
 		if(buttonObj==search) {
-			Book b = catalog.getBook(catalog.findBook(title.getText()));
-			displayBook(b);
+			int bLocation = catalog.findBook(title.getText());
+			if(bLocation!=-1) {
+				Book b = catalog.getBook(bLocation);
+				displayBook(b);
 			}
-			dispose();
+			else {
+				errorMsg("Book not found");
+			}
 		}
+		if(buttonObj==cancelBtn) {
+			dispose();
+		}	
+	}
+	
 	private void displayBook(Book b) {
 		ArrayList<Book> displayBook = new ArrayList<Book>();
 		displayBook.add(b);
 		DisplayDlg dlg = new DisplayDlg(main,"All Books", displayBook);
 		dlg.setVisible(true);
 	}
+	
+	private void errorMsg(String str) {
+		ErrorDlg display = new ErrorDlg(main,str);
+		display.setVisible(true);
+	}
 }
-

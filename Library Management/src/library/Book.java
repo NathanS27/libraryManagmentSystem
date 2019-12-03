@@ -51,6 +51,7 @@ public class Book {
 	}
 	
 	private String statusCheck(Boolean b) {
+		//changes the color of the book status depending on avalibility
 		if(b) {
 			return " <font color='green'> AVAILABLE</font>";
 		}
@@ -62,5 +63,3 @@ public class Book {
 	}
 	
 }
-
-

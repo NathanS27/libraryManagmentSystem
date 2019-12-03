@@ -19,7 +19,10 @@ public class CheckOutDlg extends GBDialog {
 	
 	JFrame parentClass= new JFrame();
 	
+	private int type;
+	
 	Catalog catalog;
+	Book book;
 	Date dateClass= new Date();
 	
 	public CheckOutDlg(JFrame parent, Catalog c) {
@@ -31,28 +34,83 @@ public class CheckOutDlg extends GBDialog {
 		catalog=c;
 		date.setText(dateClass.today().toString());
 		parentClass=parent;
+		type=0;
+	}
+	
+	public CheckOutDlg(JFrame parent, Catalog c,Book b) {
+		super(parent);
+		setTitle("Check Out");
+		setDlgCloseIndicator("Cancel");
+		setSize(300, 150);
+		setLocationRelativeTo(null);
+		catalog=c;
+		book=b;
+		date.setText(dateClass.today().toString());
+		parentClass=parent;
+		title.setText(b.getTitle());
+		title.disable();
+		borrower.requestFocus();
+		type=1;
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
 		if(buttonObj==checkOut) {
-			//TODO error check
-			int bLocation=catalog.findBook(title.getText());
-			if(bLocation!=-1) {
-				Book b = catalog.getBook(bLocation);
-				try {
-				catalog.checkOut(bLocation, borrower.getText(),date.getText());
-				dispose();
+			try {
+				errorCheck();
+				if(type==0) {
+					int bLocation=catalog.findBook(title.getText().trim());
+					//if the book is not found
+					if((bLocation!=-1)) {
+						if(catalog.getInventory().get(bLocation).isAvailable()) {
+							catalog.checkOut(bLocation, borrower.getText(),date.getText());
+							dispose();
+						}
+						else {
+							errorMsg("Book is already checked out");
+							resetInputs();
+						}	
+					}
+					else {
+						resetInputs();
+						errorMsg("Book not found");
+					}
 				}
-				catch(ImproperFormatException e) {
-					errorMsg(e.getLocalizedMessage());
+				else {
+					book.setBorrower(borrower.getText());
+					book.setCheckOutDate(new Date(date.getText()));
+					dispose();
+					ExtraCreditListDlg dlg = new ExtraCreditListDlg(parentClass,catalog);
+					dlg.setVisible(true);
 				}
 			}
-			else {
-				errorMsg("Book not found");
+			catch(ImproperFormatException e) {
+					date.setText(dateClass.today().toString());
+					errorMsg(e.getLocalizedMessage());
 			}
 		}
 		else if(buttonObj==cancelBtn) {
 			dispose();
+			if(type ==1) {
+				ExtraCreditListDlg dlg = new ExtraCreditListDlg(parentClass,catalog);
+				dlg.setVisible(true);
+			}
+		}
+	}
+	
+	private void errorCheck() throws ImproperFormatException{
+		if(title.getText().trim().isEmpty()) {
+			throw new ImproperFormatException("MUST ENTER TITLE");
+		}
+		if(borrower.getText().trim().isEmpty()) {
+			throw new ImproperFormatException("MUST ENTER NAME");
+		}
+		if(date.getText().trim().isEmpty()) {
+			date.setText(dateClass.today().toString());
+			throw new ImproperFormatException("MUST ENTER DATE");
+		}
+		if(new Date().today().isLessThan(new Date(date.getText()))) {
+			date.setText(dateClass.today().toString());
+			throw new ImproperFormatException(String.format("Check out day must be '%s' or earlier",new Date().today().toString()));
 		}
 	}
 	
@@ -60,6 +118,10 @@ public class CheckOutDlg extends GBDialog {
 		ErrorDlg display = new ErrorDlg(parentClass,str);
 		display.setVisible(true);
 	}
+	
+	private void resetInputs() {
+		title.setText("");
+		borrower.setText("");
+		date.setText(dateClass.today().toString());
+	}
 }
-
-

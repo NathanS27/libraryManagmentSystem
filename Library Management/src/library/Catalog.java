@@ -1,4 +1,4 @@
-package library;
+  package library;
 
 import java.util.*;
 import BreezySwing.*;
@@ -9,11 +9,6 @@ public class Catalog {
 	
 	public Catalog() {
 		inventory = new ArrayList<Book>();
-		inventory.add(new Book("Cat In The Hat","Dr. Seuss"));
-		inventory.add(new Book("TEST","TESTER"));
-		inventory.add(new Book("The Grapes Of Wrath","John Steinbeck"));
-		inventory.add(new Book("To Kill A Mockingbird","Harper Lee"));
-		inventory.add(new Book("Webster’s Dictionary","Webster"));
 	}
 	
 	public ArrayList<Book> getInventory() {
@@ -23,7 +18,9 @@ public class Catalog {
 	public ArrayList<Book> getOverdue() throws ImproperFormatException{
 		ArrayList<Book> overdue = new ArrayList<Book>();;
 		for(int i=0;i<inventory.size();i++) {
+			//if it is checked out
 			if(!inventory.get(i).isAvailable()) {
+				//if it is overdue
 				if(inventory.get(i).isOverdue()) {
 					overdue.add(inventory.get(i));
 				}
@@ -32,13 +29,24 @@ public class Catalog {
 		return overdue;
 	}
 	
+	public ArrayList<Book> getCheckedOut() throws ImproperFormatException{
+		ArrayList<Book> checkedOut = new ArrayList<Book>();;
+		for(int i=0;i<inventory.size();i++) {
+			//if it is checked out
+			if(!inventory.get(i).isAvailable()) {
+					checkedOut.add(inventory.get(i));
+			}
+		}
+		return checkedOut;
+	}
+	
 	public void addBook(String title, String author) {
 		inventory.add(new Book(title,author));
 	}
 	
 	public int findBook(String title) {
 		for(int i=0;i<inventory.size();i++) { 
-			if(title.equals(inventory.get(i).getTitle())) {
+			if(title.toLowerCase().equals(inventory.get(i).getTitle().toLowerCase())) {
 				return i;
 			}
 		}
@@ -58,5 +66,3 @@ public class Catalog {
 		inventory.get(i).setBorrower(null);
 	}
 }
-
-
