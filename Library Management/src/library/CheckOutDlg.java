@@ -58,7 +58,7 @@ public class CheckOutDlg extends GBDialog {
 			try {
 				errorCheck();
 				if(type==0) {
-					int bLocation=catalog.findBook(title.getText().trim());
+					int bLocation=catalog.findBook(title.getText().trim(),true);
 					//if the book is not found
 					if((bLocation!=-1)) {
 						if(catalog.getInventory().get(bLocation).isAvailable()) {

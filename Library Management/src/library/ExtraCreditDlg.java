@@ -23,7 +23,7 @@ public class ExtraCreditDlg extends GBDialog {
 	
 	public ExtraCreditDlg(JFrame parent,Book b,Catalog c) {
 		super(parent);
-		setTitle("Search");
+		setTitle(b.getTitle());
 		setDlgCloseIndicator("Close");
 		setSize(800, 120);
 		setLocationRelativeTo(null);

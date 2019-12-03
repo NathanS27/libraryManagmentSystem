@@ -16,7 +16,7 @@ public class ReturnDlg extends GBDialog {
 	
 	public ReturnDlg(JFrame parent,Catalog c) {
 		super(parent);
-		setTitle("Check Out");
+		setTitle("Return");
 		setDlgCloseIndicator("Cancel");
 		setSize(300, 100);
 		setLocationRelativeTo(null);
@@ -32,7 +32,7 @@ public class ReturnDlg extends GBDialog {
 			catch(ImproperFormatException e) { 
 				errorMsg(e.getMessage());
 			}
-			int bLocation=catalog.findBook(title.getText());
+			int bLocation=catalog.findBook(title.getText(),false);
 			if((bLocation!=-1)&&(!catalog.getBook(bLocation).isAvailable())) {
 				try {
 				catalog.returnbook(bLocation);

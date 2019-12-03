@@ -22,7 +22,7 @@ public class AddDlg extends GBDialog {
 	
 	public AddDlg(JFrame parent, Catalog c) {
 		super(parent);
-		setTitle("Check Out");
+		setTitle("Add Book");
 		setDlgCloseIndicator("Cancel");
 		setSize(400, 200);
 		setLocationRelativeTo(null);
@@ -37,9 +37,6 @@ public class AddDlg extends GBDialog {
 		if(buttonObj==addNewBook) {
 			try {
 			errorCheck();
-			if(catalog.findBook(title.getText())!=-1) {
-				errorMsg("DUPLICATE BOOK: to return or checkout use Extra Credit button");
-			}
 			catalog.addBook(title.getText(),author.getText());
 			dispose();
 			}
@@ -51,6 +48,9 @@ public class AddDlg extends GBDialog {
 			//only allows the user to populate the library once
 			populate();
 			populateButton++;
+			dispose();
+		}
+		else {
 			dispose();
 		}
 	}

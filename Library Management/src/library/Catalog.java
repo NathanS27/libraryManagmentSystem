@@ -40,14 +40,36 @@ public class Catalog {
 		return checkedOut;
 	}
 	
+	public ArrayList<Book> search(String str){
+		ArrayList<Book> searchResults = new ArrayList<Book>();;
+		for(int i=0;i<inventory.size();i++) {
+			if(inventory.get(i).getTitle().toLowerCase().contains(str.toLowerCase())) {
+				searchResults.add(inventory.get(i));
+			}
+		}
+		return searchResults;
+	}
+	
+	
+	
 	public void addBook(String title, String author) {
 		inventory.add(new Book(title,author));
 	}
 	
-	public int findBook(String title) {
-		for(int i=0;i<inventory.size();i++) { 
-			if(title.toLowerCase().equals(inventory.get(i).getTitle().toLowerCase())) {
-				return i;
+	public int findBook(String title,boolean type) {
+		//Availability defines if it wants a checked out book or not
+		if(type) {
+			for(int i=0;i<inventory.size();i++) { 
+				if((title.toLowerCase().equals(inventory.get(i).getTitle().toLowerCase()))&&(inventory.get(i).isAvailable())) {
+					return i;
+				}
+			}
+		}
+		else {
+			for(int i=0;i<inventory.size();i++) { 
+				if((title.toLowerCase().equals(inventory.get(i).getTitle().toLowerCase()))&&(!inventory.get(i).isAvailable())) {
+					return i;
+				}
 			}
 		}
 		return -1;

@@ -13,6 +13,8 @@ public class SearchDlg extends GBDialog {
 	JButton search = addButton("Search", 4, 1, 1, 1);
 	JButton cancelBtn = addButton("Cancel", 4, 2, 1, 1);
 	
+	private ArrayList<Book> displayBook = new ArrayList<Book>();
+	
 	JFrame main;
 	Catalog catalog;
 	
@@ -28,10 +30,12 @@ public class SearchDlg extends GBDialog {
 	
 	public void buttonClicked(JButton buttonObj) {
 		if(buttonObj==search) {
-			int bLocation = catalog.findBook(title.getText());
-			if(bLocation!=-1) {
-				Book b = catalog.getBook(bLocation);
-				displayBook(b);
+			if(catalog.search(title.getText()).size()>0) {
+				for(Book temp : catalog.search(title.getText())) {
+					displayBook.add(temp);
+				}
+				displayBook();
+				dispose();
 			}
 			else {
 				errorMsg("Book not found");
@@ -42,9 +46,7 @@ public class SearchDlg extends GBDialog {
 		}	
 	}
 	
-	private void displayBook(Book b) {
-		ArrayList<Book> displayBook = new ArrayList<Book>();
-		displayBook.add(b);
+	private void displayBook() {
 		DisplayDlg dlg = new DisplayDlg(main,"All Books", displayBook);
 		dlg.setVisible(true);
 	}
