@@ -7,7 +7,7 @@ import BreezySwing.*;
 
 public class LibraryUI extends GBFrame{
 	
-	JLabel currentDate = addLabel("",									1,1,4,1);
+	JLabel currentDate = addLabel("",									1, 1, 4, 1);
 	JButton checkOut = addButton("Check Out", 							2, 1, 1, 2);
 	JButton returnBook = addButton("Return", 							2, 2, 1, 2);
 	JButton viewBooks = addButton("View Books", 						2, 3, 1, 2);
@@ -26,50 +26,55 @@ public class LibraryUI extends GBFrame{
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
-		if(buttonObj == checkOut) {
-			CheckOutDlg dlg = new CheckOutDlg(this,catalog);
-			dlg.setVisible(true);
-		}
-		if(buttonObj == returnBook) {
-			ReturnDlg dlg = new ReturnDlg(this,catalog);
-			dlg.setVisible(true);
-		}
-		if(buttonObj == viewBooks) {
-			DisplayDlg dlg = new DisplayDlg(this,"All Books", catalog.getInventory());
-			dlg.setVisible(true);
-			catalog.getInventory();
-		}
-		if(buttonObj == viewCheckedOutBooks) {
-			try {
-			DisplayDlg dlg = new DisplayDlg(this,"Checked Out", catalog.getCheckedOut());
-			dlg.setVisible(true);
-			catalog.getInventory();
+		if(buttonObj!=addBook&&catalog.getInventory().size()>0) {
+			if(buttonObj == checkOut) {
+				CheckOutDlg dlg = new CheckOutDlg(this,catalog);
+				dlg.setVisible(true);
 			}
-			catch(ImproperFormatException e) {
-				errorMsg(e.getMessage());
+			if(buttonObj == returnBook) {
+				ReturnDlg dlg = new ReturnDlg(this,catalog);
+				dlg.setVisible(true);
+			}
+			if(buttonObj == viewBooks) {
+				DisplayDlg dlg = new DisplayDlg(this,"All Books", catalog.getInventory());
+				dlg.setVisible(true);
+				catalog.getInventory();
+			}
+			if(buttonObj == viewCheckedOutBooks) {
+				try {
+				DisplayDlg dlg = new DisplayDlg(this,"Checked Out", catalog.getCheckedOut());
+				dlg.setVisible(true);
+				catalog.getInventory();
+				}
+				catch(ImproperFormatException e) {
+					errorMsg(e.getMessage());
+				}
+			}
+			if(buttonObj == viewOverdue) {
+				try {
+				DisplayDlg dlg = new DisplayDlg(this,"Overdue", catalog.getOverdue());
+				dlg.setVisible(true);
+				catalog.getOverdue();
+				}
+				catch(ImproperFormatException e) {
+					errorMsg(e.getMessage());
+				}
+			}
+			if(buttonObj == search) {
+				SearchDlg dlg = new SearchDlg(this,catalog);
+				dlg.setVisible(true);
+			}
+			if(buttonObj == extraCredit) {
+				ExtraCreditListDlg dlg = new ExtraCreditListDlg(this,catalog);
+				dlg.setVisible(true);
 			}
 		}
-		if(buttonObj == viewOverdue) {
-			try {
-			DisplayDlg dlg = new DisplayDlg(this,"Overdue", catalog.getOverdue());
-			dlg.setVisible(true);
-			catalog.getOverdue();
-			}
-			catch(ImproperFormatException e) {
-				errorMsg(e.getMessage());
-			}
-		}
-		if(buttonObj == addBook) {
+		else if(buttonObj == addBook) {
 			AddDlg dlg = new AddDlg(this, catalog);
 			dlg.setVisible(true);
 		}
-		if(buttonObj == search) {
-			SearchDlg dlg = new SearchDlg(this,catalog);
-			dlg.setVisible(true);
-		}
-		if(buttonObj == extraCredit) {
-			ExtraCreditListDlg dlg = new ExtraCreditListDlg(this,catalog);
-			dlg.setVisible(true);
+		else {
+			errorMsg("Library is Empty");
 		}
 	}
 	

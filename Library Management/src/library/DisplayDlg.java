@@ -80,7 +80,7 @@ public class DisplayDlg extends GBDialog {
 	
 	private String overdueFormat(Boolean b, Book inputBook) {
 		if(b) {
-			return String.format("<html> <font color='red'> %s</font> </html>",inputBook.getDueDate().toString());
+			return String.format("<html> <font color='red'>OVERDUE - %s</font> </html>",inputBook.getDueDate().toString());
 		}
 		return inputBook.getDueDate().toString();
 	}

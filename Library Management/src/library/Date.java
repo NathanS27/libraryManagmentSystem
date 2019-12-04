@@ -106,9 +106,6 @@ public class Date {
 	}
 
 	private void errorCheck(String str) throws ImproperFormatException {
-		if(str.length()>10) {
-			throw new ImproperFormatException("Date format must be mm/dd/yyyy");
-		}
 		String[] splitDate = str.split("/");
 		if((splitDate[0].length()>2)||Integer.parseInt(splitDate[0])>12) {
 			throw new ImproperFormatException("Invalid month");
@@ -116,9 +113,17 @@ public class Date {
 		if(splitDate[1].length()>2) {
 			throw new ImproperFormatException("Invalid day");
 		}
-		int ecm = Integer.parseInt(splitDate[0]);
-		int ecd = Integer.parseInt(splitDate[1]);
-		int ecy = Integer.parseInt(splitDate[2]);
+		int ecm =0;
+		int ecd=0;
+		int ecy=0;
+		try {
+			ecm = Integer.parseInt(splitDate[0]);
+			ecd = Integer.parseInt(splitDate[1]);
+			ecy = Integer.parseInt(splitDate[2]);
+		}
+		catch(NumberFormatException e) {
+			throw new ImproperFormatException("Date format must be mm/dd/yyyy in digits");
+		}
 		int febLength=28;
 		if(ecm==2) {
 			if(isLeapYear(ecy)) {

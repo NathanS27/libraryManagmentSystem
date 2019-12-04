@@ -108,10 +108,6 @@ public class CheckOutDlg extends GBDialog {
 			date.setText(dateClass.today().toString());
 			throw new ImproperFormatException("MUST ENTER DATE");
 		}
-		if(new Date().today().isLessThan(new Date(date.getText()))) {
-			date.setText(dateClass.today().toString());
-			throw new ImproperFormatException(String.format("Check out day must be '%s' or earlier",new Date().today().toString()));
-		}
 	}
 	
 	private void errorMsg(String str) {
