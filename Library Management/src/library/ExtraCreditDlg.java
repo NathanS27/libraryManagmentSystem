@@ -87,7 +87,15 @@ public class ExtraCreditDlg extends GBDialog {
 		if(b) {
 			return "<html> <font color='green'> AVAILABLE</font> </html>";
 		}
-		return "<html> <font color='red'> CHECKED OUT</font> </html>";
+		else if(book.getCheckOutDate().today().isLessThan(book.getCheckOutDate())) {
+			return "<html> <font color='red'> ON HOLD </font> </html>";
+		}
+		else if(book.isOverdue()) {
+			return "<html> <font color='red'> OVERDUE</font> </html>";
+		}
+		else {
+			return "<html> <font color='red'> CHECKED OUT</font> </html>";
+		}
 	}
 	
 	private String overdueFormat(Boolean b, Book inputBook) {

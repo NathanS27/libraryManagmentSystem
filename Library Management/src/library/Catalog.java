@@ -29,7 +29,7 @@ public class Catalog {
 		return overdue;
 	}
 	
-	public ArrayList<Book> getCheckedOut() throws ImproperFormatException{
+	public ArrayList<Book> getCheckedOut() {
 		ArrayList<Book> checkedOut = new ArrayList<Book>();;
 		for(int i=0;i<inventory.size();i++) {
 			//if it is checked out

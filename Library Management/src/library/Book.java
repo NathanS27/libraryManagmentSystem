@@ -51,11 +51,18 @@ public class Book {
 	}
 	
 	private String statusCheck(Boolean b) {
-		//changes the color of the book status depending on avalibility
 		if(b) {
-			return " <font color='green'> AVAILABLE</font>";
+			return "<html> <font color='green'> AVAILABLE</font> </html>";
 		}
-		return "<font color='red'> CHECKED OUT</font>";
+		else if(getCheckOutDate().today().isLessThan(getCheckOutDate())) {
+			return "<html> <font color='red'> ON HOLD </font> </html>";
+		}
+		else if(isOverdue()) {
+			return "<html> <font color='red'> OVERDUE</font> </html>";
+		}
+		else {
+			return "<html> <font color='red'> CHECKED OUT</font> </html>";
+		}
 	}
 	
 	public String displayBook() {

@@ -13,12 +13,12 @@ public class Date {
 	
 	public Date(String dateInput) throws ImproperFormatException {
 		if(dateInput!=null) {
-			String[] dateRaw =dateInput.split("/");
 			errorCheck(dateInput);
+			String[] dateRaw =dateInput.split("/");
 			try {
-			m=Integer.parseInt(dateRaw[0]);
-			d=Integer.parseInt(dateRaw[1]);
-			y=Integer.parseInt(dateRaw[2]);
+				m=Integer.parseInt(dateRaw[0]);
+				d=Integer.parseInt(dateRaw[1]);
+				y=Integer.parseInt(dateRaw[2]);
 			}
 			catch(NumberFormatException e) {
 				throw new ImproperFormatException("Date must be integers");
@@ -107,6 +107,9 @@ public class Date {
 
 	private void errorCheck(String str) throws ImproperFormatException {
 		String[] splitDate = str.split("/");
+		if(splitDate.length!=3) {
+			throw new ImproperFormatException("Date must be MM/DD/YYYY");
+		}
 		if((splitDate[0].length()>2)||Integer.parseInt(splitDate[0])>12) {
 			throw new ImproperFormatException("Invalid month");
 		}
@@ -148,7 +151,6 @@ public class Date {
 				throw new ImproperFormatException("Invalid day");
 			}
 		}
-		
 	}
 	
 	public Boolean isLessThan(Date inputDate) {

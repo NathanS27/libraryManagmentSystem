@@ -99,9 +99,11 @@ public class CheckOutDlg extends GBDialog {
 	
 	private void errorCheck() throws ImproperFormatException{
 		if(title.getText().trim().isEmpty()) {
+			title.setText("");
 			throw new ImproperFormatException("MUST ENTER TITLE");
 		}
 		if(borrower.getText().trim().isEmpty()) {
+			borrower.setText("");
 			throw new ImproperFormatException("MUST ENTER NAME");
 		}
 		if(date.getText().trim().isEmpty()) {

@@ -32,13 +32,23 @@ public class LibraryUI extends GBFrame{
 				dlg.setVisible(true);
 			}
 			if(buttonObj == returnBook) {
+				try {
 				ReturnDlg dlg = new ReturnDlg(this,catalog);
 				dlg.setVisible(true);
+				}
+				catch(ImproperFormatException e) {
+					errorMsg(e.getMessage());
+				}
 			}
 			if(buttonObj == viewBooks) {
+				try {
 				DisplayDlg dlg = new DisplayDlg(this,"All Books", catalog.getInventory());
 				dlg.setVisible(true);
 				catalog.getInventory();
+				}
+				catch(ImproperFormatException e) {
+					errorMsg(e.getMessage());
+				}
 			}
 			if(buttonObj == viewCheckedOutBooks) {
 				try {
@@ -74,7 +84,9 @@ public class LibraryUI extends GBFrame{
 			dlg.setVisible(true);
 		}
 		else {
-			errorMsg("Library is Empty");
+			errorMsg("Library is Empty...Opening 'Add Book'","Continue");
+			AddDlg dlg = new AddDlg(this, catalog);
+			dlg.setVisible(true);
 		}
 	}
 	
@@ -84,6 +96,11 @@ public class LibraryUI extends GBFrame{
 	
 	private void errorMsg(String str) {
 		ErrorDlg display = new ErrorDlg(this,str);
+		display.setVisible(true);
+	}
+	
+	private void errorMsg(String str,String buttonName) {
+		ErrorDlg display = new ErrorDlg(this,str,buttonName);
 		display.setVisible(true);
 	}
 	

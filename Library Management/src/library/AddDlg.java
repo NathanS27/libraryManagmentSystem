@@ -71,9 +71,17 @@ public class AddDlg extends GBDialog {
 	
 	private void populate() {
 		catalog.addBook("Cat In The Hat","Dr. Seuss");
-		catalog.addBook("TEST","TESTER");
+		catalog.addBook("Cat In The Hat","Dr. Seuss");
 		catalog.addBook("The Grapes Of Wrath","John Steinbeck");
 		catalog.addBook("To Kill A Mockingbird","Harper Lee");
 		catalog.addBook("Webster’s Dictionary","Webster");
+		try {
+		catalog.checkOut(0, "Keefer", new Date().today().toString());
+		catalog.checkOut(1, "Me","1/12/1999");
+		catalog.checkOut(2, "Mr.Geary","2/27/2025");		
+		}
+		catch(ImproperFormatException e) {
+			
+		}
 	}
 }

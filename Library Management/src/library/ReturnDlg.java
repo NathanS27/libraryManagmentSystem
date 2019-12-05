@@ -14,7 +14,7 @@ public class ReturnDlg extends GBDialog {
 	JFrame parentClass= new JFrame();
 	Catalog catalog;
 	
-	public ReturnDlg(JFrame parent,Catalog c) {
+	public ReturnDlg(JFrame parent,Catalog c) throws ImproperFormatException {
 		super(parent);
 		setTitle("Return");
 		setDlgCloseIndicator("Cancel");
@@ -22,16 +22,15 @@ public class ReturnDlg extends GBDialog {
 		setLocationRelativeTo(null);
 		catalog = c;
 		parentClass=parent;
+		if(catalog.getCheckedOut().size()<1) {
+			throw new ImproperFormatException("No checked out books");
+		}
 	}
 	
 	public void buttonClicked(JButton buttonObj) {
 		if(buttonObj==returnButton) {
 			try {
 			errorCheck();
-			}
-			catch(ImproperFormatException e) { 
-				errorMsg(e.getMessage());
-			}
 			int bLocation=catalog.findBook(title.getText(),false);
 			if((bLocation!=-1)&&(!catalog.getBook(bLocation).isAvailable())) {
 				try {
@@ -43,13 +42,20 @@ public class ReturnDlg extends GBDialog {
 				dispose();
 			}
 			else {
-				if(catalog.getBook(bLocation).isAvailable()) {
-					errorMsg("Book was not checked out");
-				}
-				else {
-				errorMsg("Book not found");
-				}
+				
+				errorMsg("Book not found/checked out");
 			}
+			}
+			catch(ImproperFormatException e) { 
+				errorMsg(e.getMessage());
+			}
+			catch(Why w) {
+				dispose();
+				messageBox(w.getMessage());
+				
+			}
+			
+			
 				
 		}
 		else if(buttonObj==cancelBtn) {
@@ -58,9 +64,14 @@ public class ReturnDlg extends GBDialog {
 		
 	}
 	
-	private void errorCheck() throws ImproperFormatException{
+	private void errorCheck() throws ImproperFormatException,Why{
 		if(title.getText().trim().isEmpty()) {
 			throw new ImproperFormatException("MUST ENTER TITLE");
+		}
+		if(catalog.search(title.getText()).size()>1) {
+			throw new Why("There is another copy of this book signed out. \n"
+					+ "Please use the extra credit button for optimal results"
+					+ "\nThanks :)");
 		}
 	}
 	

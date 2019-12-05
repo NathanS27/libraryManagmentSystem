@@ -21,6 +21,17 @@ public class ErrorDlg extends GBDialog {
 		display.setText(String.format("<html><font color='white'>%s</font></html>", message));
 	}
 	
+	public ErrorDlg(JFrame parent,String message,String buttonName) {
+		super(parent);
+		setTitle("ERROR");
+		getContentPane().setBackground(Color.RED.brighter().brighter());
+		setDlgCloseIndicator("Close");
+		setSize(400, 100);
+		setLocationRelativeTo(null);
+		close.setText(buttonName);
+		display.setText(String.format("<html><font color='white'>%s</font></html>", message));
+	}
+	
 	public void buttonClicked(JButton buttonObj) {
 		if(buttonObj==close) {
 			dispose();
